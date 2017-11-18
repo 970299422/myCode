@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div {
+				width: 27px;
+				height: 28px;
+				background: url(images/star.gif);
+				float: left;
+			}
+		</style>
+		<script>
+			onload = function(){
+				
+				var arr = ["差", "一般", "还行", "良好", "推荐"];
+				
+				var adiv = document.getElementsByTagName("div");
+				var level = document.getElementById("level");
+				
+				for (var i=0; i<adiv.length; i++) {
+					adiv[i].index = i;
+					adiv[i].onclick = function(){
+						
+						for (var j=0; j<adiv.length; j++) {
+							if (j <= this.index){
+								adiv[j].style.background = 'url(images/star.gif) 0 -29px';   
+							}
+							else {
+								adiv[j].style.background = 'url(images/star.gif)';   
+							}
+						}
+						
+						level.innerHTML = arr[this.index];
+						
+					}
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<br>
+		<p id="level"></p>
+	</body>
+</html>

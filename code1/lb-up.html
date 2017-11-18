@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			* {margin: 0; padding: 0; border: none;}
+			ul,li {list-style: none;}
+			#box {
+				width: 300px;
+				height: 150px;
+				margin: 100px auto;
+				border: 5px solid black;
+				position: relative;
+				/*overflow: hidden;*/
+			}
+			#list {
+				position: absolute;
+				left: 0;
+				top: -0px;
+			}
+			#list li {
+				width: 300px;
+				height: 150px;
+				text-align: center;
+				line-height: 150px;
+				font-size: 50px;
+			}
+			
+			
+		</style>
+		<script src="move.js"></script>
+		<script>
+			onload = function(){
+				
+				var box = document.getElementById("box");
+				var list = document.getElementById("list");
+				var ali = list.getElementsByTagName("li");
+				
+				//初始化
+				//把第1个li（下标为0）复制一份并添加到最后一个
+				list.appendChild( ali[0].cloneNode(true) );
+				
+				//每个li的高度
+				var liH = ali[0].offsetHeight;
+				
+				//li的数量
+				var size = ali.length;  
+				console.log(size);//5
+				
+				//自动轮播
+				var n = 0;  //表示即将显示的li对应的下标
+				setInterval(function(){
+					//list.style.top = list.offsetTop - 150 + "px";
+					//animate(list, {top:list.offsetTop - 150})
+					n++;
+					move();
+				}, 2000);
+				
+				//移动到第n个li（下标为n的li）
+				function move(){
+					if (n >= size){
+						list.style.top = 0; //瞬间显示第1个li（下标为0）
+						n = 1; //即将显示第2张（下标为1）
+					}
+					
+					//动画移动
+					animate(list, {top: -liH*n});
+				}
+				
+				
+				
+			}
+		</script>
+	</head>
+	<body>
+		<div id="box">
+			<ul id="list">
+				<li style="background: orange;">1</li>
+				<li style="background: green;">2</li>
+				<li style="background: pink;">3</li>
+				<li style="background: blue;">4</li>
+			</ul>
+		</div>
+	</body>
+</html>

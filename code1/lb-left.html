@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			* {margin: 0; padding: 0; border: none;}
+			ul,li {list-style: none;}
+			#box {
+				width: 600px;
+				height: 300px;
+				margin: 100px auto;
+				border: 5px solid black;
+				position: relative;
+				overflow: hidden;
+			}
+			#list {
+				/*width: 1500px;*/
+				position: absolute;
+				left: 0;
+				top: -0px;
+			}
+			#list li {
+				width: 600px;
+				height: 300px;
+				text-align: center;
+				line-height: 300px;
+				font-size: 100px;
+				float: left;
+			}
+			
+			#list2 {
+				width: 200px;
+				height: 20px;
+				position: absolute;
+				right: 10px;
+				bottom: 20px;
+			}
+			#list2 li {
+				width: 18px;
+				height: 18px;
+				border: 1px solid fuchsia;
+				background: #008B8B;
+				float: left;
+				margin-left: 5px;
+				cursor: pointer;
+				text-align: center;
+				line-height: 18px;
+				font-size: 14px;
+			}
+			#list2 li.active{
+				background: #444444;
+				color: white;
+			}
+			
+			#prev, #next {
+				width: 50px;
+				height: 22px;
+				background: purple;
+				position: absolute;
+				top: 45%;
+				color: white;
+				cursor: pointer;
+			}
+			#prev {
+				left: 5px;
+			}
+			#next {
+				right: 5px;
+			}
+			
+		</style>
+		<script src="move.js"></script>
+		<script>
+			onload = function(){
+				
+				var box = document.getElementById("box");
+				var list = document.getElementById("list");
+				var ali = list.getElementsByTagName("li");
+				
+				var list2 = document.getElementById("list2");
+				var ali2 = list2.getElementsByTagName("li");
+
+
+				//初始化 
+				//复制第一个li
+				list.appendChild( ali[0].cloneNode(true) );
+				
+				//li的宽度
+				var liW = ali[0].offsetWidth;
+				
+				//li的数量
+				var size = ali.length;
+				console.log(size)
+				//修改list的宽度
+				list.style.width = liW * size + "px";
+				
+				//
+				var n = 0;
+				var timer = setInterval(function(){
+					n++;
+					move();
+				}, 2000);
+				
+				//动画移动到第n个li(下标为n)
+				function move(){
+					
+					//右边界
+					if (n >= size){
+						list.style.left = 0;
+						n = 1;
+					}
+					
+					//左边界
+					if (n < 0){
+						list.style.left = -(size-1)*liW + "px";
+						n = size-2; //倒数第2张图（倒数第2个li）
+					}
+					
+					//动画移动
+					animate(list, {left: -liW*n});
+					
+					//同时改变按钮的选中状态
+					for (var i=0; i<ali2.length; i++) {
+						if (n == i) {
+							ali2[n].className = "active";
+						}
+						else {
+							ali2[i].className = "";
+						}
+					}
+					if (n == size-1) {
+						ali2[0].className = "active";
+					}
+				}
+				
+				//点击按钮
+				for (var i=0; i<ali2.length; i++) {
+					ali2[i].index = i;
+					ali2[i].onmouseenter = function(){
+						n = this.index;
+						move();
+					}
+				}
+				
+				//上一页
+				var prev = document.getElementById("prev");
+				prev.onclick = function(){
+					n--;
+					move();
+				}
+				
+				//下一页
+				var next = document.getElementById("next");
+				next.onclick = function(e){
+					e.preventDefault()
+					n++;
+					move();
+				}
+				
+				
+				//移入box停止定时器
+				box.onmouseenter = function(){
+					clearInterval(timer);
+				}
+				//移出box开启定时器
+				box.onmouseleave = function(){
+					clearInterval(timer);
+					timer = setInterval(function(){
+						n++;
+						move();
+					}, 2000);
+				}
+				
+			}
+		</script>
+	</head>
+	<body>
+		<div id="box">
+			<ul id="list">
+				<li style="background: orange;">1</li>
+				<li style="background: green;">2</li>
+				<li style="background: pink;">3</li>
+				<li style="background: blue;">4</li>
+			</ul>
+			<ul id="list2">
+				<li class="active">1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+			</ul>
+			<div id="prev">上一页</div>
+			<div id="next">下一页</div>
+		</div>
+
+	</body>
+</html>

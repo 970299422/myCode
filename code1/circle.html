@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			onload = function(){
+				
+				var btn = document.getElementById("btn");
+				var box = document.getElementById("box");
+				
+				btn.onclick = function(){
+					
+					//弧度d : π=180°， 2π=360°
+					//1弧度 ≈ 57°
+					//0.05弧度 ≈ 3° 
+					var d = 0;
+					var r = 100;
+					
+					setInterval(function(){
+						
+						box.style.left = 195 + r*Math.cos(d) + "px";
+						box.style.top = 195 + r*Math.sin(d) + "px";
+						
+						d += 0.05;
+					},30)
+					
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<button id="btn">开始运动</button>
+		<div style="width: 200px; height: 200px; border: 1px solid black; border-radius: 50%; position: absolute;left: 100px; top: 100px;"></div>
+		<div id="box" style="width: 10px; height: 10px; border-radius: 50%; background: red; position: absolute;left: 95px; top: 195px;"></div>
+	</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			
+			
+			
+			//正则表达式的符号
+			//  .  ：表示任意单个字符
+			var str = "go,gle";
+			var reg = /go.gle/;
+			//console.log( reg.test(str) );
+			
+			//  *  : 表示前面字符出现的次数：0个或多个
+			var str = "gogle";
+			var reg = /go.*gle/;   
+			//console.log( reg.test(str) ); 
+			
+			//  +  : 表示前面字符出现的次数： 1个或多个
+			var str = "gogle";
+			var reg = /go+gle/;   
+			//console.log( reg.test(str) );
+			
+			// {} ： 表示前面字符出现的次数范围
+			// {3} : 表示出现3次
+			// {3,} : 表示出现至少3次
+			// {3,5} :表示出现3次到5次之间
+			
+			var str = "gooogle";
+			var reg = /go{3}gle/;
+			//console.log( reg.test(str) );
+			
+			var str = "goooooogle";
+			var reg = /go{3,}gle/;
+			//console.log( reg.test(str) );
+			
+			var str = "gooooogle";
+			var reg = /go{3,5}gle/;
+			console.log( reg.test(str) );
+			
+			
+			// [] : 表示单个字符的范围
+			// [0-9] : 表示数字
+			// [a-z] : 表示小写字母
+			// [A-Z] : 表示大写字母
+			// [a-zA-Z] : 表示字母
+			// [a-zA-Z0-9_] : 表示数字字母下划线
+			var str = "go8gle";
+			//var reg = /go[0-9]gle/;
+			var reg = /go\dgle/;     // \d等价于[0-9]
+			//console.log( reg.test(str) );
+			
+			var str = "go_gle";
+			//var reg = /go[a-zA-Z0-9_]gle/; 
+			var reg = /go\wgle/;    //  \w等价于[a-zA-Z0-9_]
+			//console.log( reg.test(str) );
+			
+			
+			//   /^  : 前匹配
+			var str = "googlefadsfas";
+			var reg = /^google/;
+			//console.log( reg.test(str) );
+			
+			//   $/ ： 后匹配
+			var str = "dsdsgoogle";
+			var reg = /google$/;
+			//console.log( reg.test(str) );
+			
+			
+			//   /^  $/  : 完全匹配，  不能有多余字符
+			var str = "go4ggggle";
+			var reg = /^go.g+le$/;
+			//console.log( reg.test(str) );
+			
+			
+			//用户名， 长度为6-20位，且只能为数字字母下划线
+			var str = "fsdfsuuuuuuuuyyhhjh";
+			var reg = /^\w{6,20}$/;
+			//console.log( reg.test(str) );
+			
+			
+			// ^  : 非
+			// [^0-9] : 非数字
+			var str = "gokgle";
+			//var reg = /go[^0-9]gle/;
+			var reg = /go\Dgle/; //\D等价于[^0-9]
+			//console.log( reg.test(str) );
+			
+			
+			// \s : 空格
+			var str = "go gle";
+			var reg = /go\sgle/;
+			//console.log( reg.test(str) );
+			
+			
+			// |  ： 或
+			var str = "dfsdgooefdsfsbaidu3r2";
+			var reg = /google|baidu/;
+			//console.log( reg.test(str) );
+			
+			
+			//用户名， 长度为6-20位，且只能为数字字母下划线, 不能数字开头
+			var str = "jfsdfsuuuuuuujh";
+			var reg = /^[a-zA-Z_]\w{5,19}$/;
+			//console.log( reg.test(str) );
+			
+			
+			// () : 分组, 将括号中的字符串看成整体
+			var str = "googlegoogle";
+			var reg = /(google)+/;
+			//console.log( reg.test(str) );
+			
+			//贪婪模式
+			var str = "fffgooglegooglegoogledddd";
+			var reg = /(google)+/;
+			//console.log( str.match(reg) ); //[googlegooglegoogle,google]
+			//console.log( RegExp.$1 ); //google, 第一个括号的内容，第一个分组的内容 
+			
+			var str = "this is 8google8 baab 8ggg8"
+			var reg =  /8(.*)8/;
+ 			//console.log( str.match(reg) );
+			// [8google8 baab 8ggg8, google8 baab 8ggg]
+			
+			//捕获性分组： ()默认就是捕获性分组
+			//非捕获性分组： (?:)
+			var str = "google 2017";
+			var reg = /^([a-z]+)\s(?:[0-9]{4})$/i;
+			console.log(reg.exec(str));  //['google 2017','google','2017']
+//			console.log( RegExp.$1 ); //google
+//			console.log( RegExp.$2 ); //2017
+//			console.log( RegExp.$0 ); //undefined
+//			console.log( RegExp.$3 ); //""
+			
+			
+			
+			//  \   转义符
+			var str = "*.[/b]"
+			var reg = /^\*\.\[\/b\]$/;
+			//console.log( reg.test(str) );
+			
+			
+			// m : 换行模式
+			var str = "1,baidu\n2,google\n3,bing";
+			var reg = /^\d+/mg;
+			console.log(str.replace(reg, "#")); 
+
+			//去除字符串首尾空格
+			var str = "   dd  dd  ";
+			console.log( str.trim() ); //"dd  dd"
+			
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			* {margin: 0; padding: 0; border: none;}
+			div {
+				float: left;
+				padding-left: 5px;
+				padding-right: 5px;
+			}
+			div img {
+				width: 180px;
+				padding: 3px;
+				border: 1px solid #ccc;
+			}
+		</style>
+		<script>
+			onload = onresize = layout;
+			
+			//瀑布流布局
+			function layout(){
+				
+				//页面宽度
+				var winW = document.documentElement.clientWidth;
+				
+				//所有div
+				var divs = document.getElementsByTagName("div"); 
+				
+				//列数
+				var columns = parseInt(winW / divs[0].offsetWidth);  
+				
+				
+				//colHeights用来保存每一列的总高度
+				var colHeights = [];
+				
+				//遍历所有div
+				for (var i=0; i<divs.length; i++) {
+					//第一行的div
+					if (i < columns) {
+						divs[i].style.position = "static";
+						colHeights.push(divs[i].offsetHeight);
+					}
+					//从第二行开始
+					else {
+						divs[i].style.position = "absolute";
+						
+						//计算最小高度的列
+						var minHeight = colHeights[0];
+						var minIndex = 0;
+						for (var j=0; j<colHeights.length; j++){
+							if (minHeight > colHeights[j]){
+								minHeight = colHeights[j];
+								minIndex = j;
+							}
+						}
+						
+						//确定位置
+						divs[i].style.left = divs[minIndex].offsetLeft + "px";
+						divs[i].style.top = minHeight + "px";
+						
+						//
+						colHeights[minIndex] += divs[i].offsetHeight;
+					}
+				}
+				
+			}
+		
+			//加载更多数据
+			onscroll = function(){
+				var scrollTop = document.documentElement.scrollTop || document.body.scrollTop; 
+				
+				//最后一个div的底部位置
+				var divs = document.getElementsByTagName("div");
+				var lastDiv = divs[divs.length-1];
+				var lastDivBottom = lastDiv.offsetTop + lastDiv.offsetHeight;
+				
+				//页面高度
+				var winH = document.documentElement.clientHeight;
+				
+				//当滚动条滚动到页面的底部（较下方位置）
+				if (winH + scrollTop >= lastDivBottom){
+					
+					//加载更多
+					//创建div节点
+					for (var i=11; i<20; i++){
+						var div = document.createElement("div");
+						document.body.appendChild(div);
+						div.innerHTML = "<img src='images/images1/img ("+ i +").jpg' >";  
+					}
+					
+					layout();
+				}
+				
+			}
+			
+			
+		</script>
+	</head>
+	<body>
+		<div><img src="images/images1/img (1).jpg" /></div>
+		<div><img src="images/images1/img (2).jpg" /></div>
+		<div><img src="images/images1/img (3).jpg" /></div>
+		<div><img src="images/images1/img (4).jpg" /></div>
+		<div><img src="images/images1/img (5).jpg" /></div>
+		<div><img src="images/images1/img (6).jpg" /></div>
+		<div><img src="images/images1/img (7).jpg" /></div>
+		<div><img src="images/images1/img (8).jpg" /></div>
+		<div><img src="images/images1/img (9).jpg" /></div>
+		<div><img src="images/images1/img (10).jpg" /></div>
+		<div><img src="images/images1/img (11).jpg" /></div>
+		<div><img src="images/images1/img (12).jpg" /></div>
+		<div><img src="images/images1/img (13).jpg" /></div>
+		<div><img src="images/images1/img (14).jpg" /></div>
+		<div><img src="images/images1/img (15).jpg" /></div>
+		<div><img src="images/images1/img (16).jpg" /></div>
+		<div><img src="images/images1/img (17).jpg" /></div>
+		<div><img src="images/images1/img (18).jpg" /></div>
+		<div><img src="images/images1/img (19).jpg" /></div>
+		<div><img src="images/images1/img (20).jpg" /></div>
+	</body>
+</html>
